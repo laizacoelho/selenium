@@ -31,55 +31,25 @@ public class TesteGoogle {
         chromeOptions.addArguments("--disable-popup-blocking");
         chromeOptions.addArguments("--incognito");
         WebDriver driver = new ChromeDriver(chromeOptions);
-        driver.get("https://www.amazon.com.br");
+        driver.get("https://www.petz.com.br");
+        driver.manage().window().maximize();
 
-        //locate a web element
-        String tagName = driver.findElement(By.id("searchDropdownBox")).getText();
-        System.out.println(tagName);
-
-        WebElement categoria = driver.findElement(By.id("searchDropdownBox"));
-        Actions actions = new Actions(driver);
-        actions.moveToElement(categoria).click().perform();
+        driver.findElement(By.linkText(stringPesquisa)).click();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
 
-        Select dropdown = new Select(driver.findElement(By.id("searchDropdownBox")));
-        dropdown.selectByIndex(8);
-        actions.click();
-        categoria.submit();
+        driver.findElement(By.id("label_-4_1684")).click();
+       // Thread.sleep(3000);
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
 
-        driver.findElement(By.linkText("Adulto")).click();
+        driver.findElement(By.id("label_-4_1685")).click();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
 
-        driver.findElement(By.linkText("LEGO")).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
+        driver.findElement(By.id("label_-2_1149")).click();
+        Thread.sleep(3000);;
 
-        driver.findElement(By.linkText("Amazon.com.br")).click();
-        Thread.sleep(3000);
-
-
-        driver.findElements(By.className("sg-col-4-of-12")).stream().forEach(s -> System.out.println(s.getText()));
-        //   driver.findElements(By.className("sg-col-4-of-12")).stream().forEach(s -> System.out.println("******************************* " + s.get("a-offscreen")));
-        ////span[@class="a-offscreen"]
-        List < WebElement > pesquisa = driver.findElements(By.className("sg-col-4-of-12"));
-        System.out.println("\n---------------- Quantidade de itens na pagina: " + pesquisa.size() + " ------------------------- \n");
-
-
-
-
-      /*  WebElement campoPesquisado = driver.findElement(By.name("q"));
-        campoPesquisado.clear();
-        campoPesquisado.sendKeys(stringPesquisa);
-
-        System.out.println("Título da página: " + driver.getTitle());
-
-        campoPesquisado.submit(); */
-
-        (new WebDriverWait(driver, Duration.ofMillis(1000))).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver objDriver) {
-                return objDriver.getTitle().toLowerCase().startsWith(stringPesquisa.toLowerCase());
-            }
-        });
+        List<WebElement> listaProdutos = driver.findElements(By.className("petzProduct"));
+        System.out.println("\n---------------- Quantidade de produtos exibidos na página: " + listaProdutos.size() + " ----------------\n");
+        listaProdutos.stream().forEach(s -> System.out.println("\n***** Produto *****\n " + s.getText() + "\n"));
 
         System.out.println("Título da página: " + driver.getTitle());
 
@@ -88,6 +58,6 @@ public class TesteGoogle {
 
     @Test
     public void test_pesquisarPor_LetsCode() throws InterruptedException {
-        pesquisarPor("Lets Code!");
+        pesquisarPor("Gatos");
     }
 }
