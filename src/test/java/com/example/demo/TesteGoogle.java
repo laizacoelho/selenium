@@ -45,15 +45,34 @@ public class TesteGoogle {
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
 
         driver.findElement(By.id("label_-2_1149")).click();
-        Thread.sleep(3000);;
+        Thread.sleep(3000);
 
         List<WebElement> listaProdutos = driver.findElements(By.className("petzProduct"));
         System.out.println("\n---------------- Quantidade de produtos exibidos na página: " + listaProdutos.size() + " ----------------\n");
         listaProdutos.stream().forEach(s -> System.out.println("\n***** Produto *****\n " + s.getText() + "\n"));
+        Thread.sleep(3000);
 
         System.out.println("Título da página: " + driver.getTitle());
 
-        driver.quit();
+        listaProdutos.get(0).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
+
+        String nomeProduto = driver.findElement(By.className("product-title")).getText();
+        String codigoProduto = driver.findElement(By.id("product-code")).getText();
+        String statusProduto = driver.findElement(By.id("available-product")).getText();
+        String marcaProduto = driver.findElement(By.className("blue")).getText();
+        String precoProduto = driver.findElement(By.className("current-price-left")).getText();
+        String descricaoProduto = driver.findElement(By.className("description")).getText();
+
+
+        System.out.println("\n---------------- Produto Selecionado: " + nomeProduto + " ----------------");
+        System.out.println("Status: " + statusProduto);
+        System.out.println("Marca: " + marcaProduto);
+        System.out.println("Preço: " + precoProduto);
+        System.out.println(descricaoProduto);
+        System.out.println(codigoProduto);
+
+        // driver.quit();
     }
 
     @Test
